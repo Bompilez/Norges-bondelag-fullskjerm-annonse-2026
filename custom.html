@@ -6,14 +6,15 @@
   <title>Amedia Parallax</title>
   <link rel="preconnect" href="https://use.typekit.net">
   <link rel="stylesheet" href="https://use.typekit.net/xka5zpt.css" />
-  <style>
-    html, body {
+
+ <style>
+   html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-image: url(examples/assets/1920x1080_TEST-4.webp);
+      background-image: url(examples/assets/BernhardArnevik_001.webp);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -45,34 +46,71 @@
     }
 
     #scale-wrapper {
+      position: relative;
+      padding-top: 20vh;
       transform-origin: top left;
       width: 100%;
     }
 
-    .container {
+    #scale-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
       width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 0 20px;
-      box-sizing: border-box;
+      height: 85vh;
+      background: radial-gradient(
+        ellipse 120% 42% at center,
+        rgba(0, 0, 0, 0.34) 0%,
+        rgba(0, 0, 0, 0.18) 32%,
+        rgba(0, 0, 0, 0.08) 52%,
+        rgba(0, 0, 0, 0) 72%
+      );
+      pointer-events: none;
+    }
+
+    #scale-wrapper::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10vh;
+      width: 100%;
+      height: 55vh;
+      background: radial-gradient(
+        ellipse 120% 48% at center,
+        rgba(0, 0, 0, 0.26) 0%,
+        rgba(0, 0, 0, 0.14) 34%,
+        rgba(0, 0, 0, 0.06) 54%,
+        rgba(0, 0, 0, 0) 74%
+      );
+      pointer-events: none;
+    }
+
+    #top-heading {
+        color: white;
+        font-size: clamp(1.5rem, 4.2vw, 2rem);
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+        line-height: 1;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
     }
 
     .wrapper-fullwidth {
       width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      margin-top: 30px;
     }
 
-    .yellow-bg,
-    .top-bg,
-    .bottom-bg {
-      padding: 20px 0;
-      overflow: hidden;
-      box-sizing: border-box;
+    .yellow-bg {
+        width: 100%;
+        padding: 20px 0;
     }
-
-    .yellow-bg { background-color: #f9dc0a; }
-    .top-bg, .bottom-bg { background-color: transparent; }
 
     .top-content, .bottom-content {
       display: flex;
@@ -86,58 +124,43 @@
       max-width: 100%;
       height: auto;
       display: block;
+      flex-shrink: 0;
+    }
+
+    .top-content, .mid-content, .bottom-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .top-content, .bottom-content {
+         padding: 0 20px;
     }
 
     .mid-content {
-      width: 100%;
-      text-align: left;
+      gap: 24px;
     }
 
-    #text1, #text2 {
-      font-size: 95px;
-      font-weight: bold;
-      margin: 0;
-      line-height: 1;
-      letter-spacing: 1px;
-      color: #594a25;
-      will-change: transform;
+    .mid-line {
+      flex: 1;
+      height: 200px;
+      background-color: #f9dc0a;
     }
 
-    #text2 {
-      padding-bottom: 20px;
-    }
 
-    #changingWord {
-      font-family: "open-sans-condensed", sans-serif;
-      font-weight: 300;
-    }
-
-    .rotating-word {
-      transition: opacity 0.5s ease;
-      display: inline-block;
-    }
-
-    .rotating-word.hide { opacity: 0; }
-
-    .bottom-text {
-      margin: 0;
-      font-size: 26.9px;
-      letter-spacing: 2px;
-      color: #594a25;
-    }
 
     .bottom-content img {
       width: 200px;
-      margin-right: 22px;
       height: auto;
       display: block;
-      padding-bottom: 50px;
+      margin-top: 1rem;
     }
-  </style>
+
+ </style>
 </head>
 <body>
   <div id="banner">
-    <!-- Klikkbart sporingslag via script -->
     <div
       id="clickLayer"
       role="button"
@@ -146,12 +169,12 @@
       Klikk
     </div>
 
-    <div id="scale-wrapper">
+     <div id="scale-wrapper">
       <div class="wrapper-fullwidth">
         <div class="top-bg">
           <div class="container">
             <div class="top-content">
-              <img id="top-logo" src="examples/assets/Mer enn mat_Logo_Gul.svg" alt="Logo">
+              <h2 id="top-heading">LANDBRUKET ER FRAMTIDA</h2>
             </div>
           </div>
         </div>
@@ -161,9 +184,9 @@
         <div class="yellow-bg" id="yellow-fill">
           <div class="container">
             <div class="mid-content">
-              <div id="text1">LANDBRUK</div>
-              <div id="text2">ER <span id="changingWord" class="rotating-word">KULTUR</span></div>
-              <span class="bottom-text">TAKK FOR AT DU STØTTER BONDEN!</span>
+              <div class="mid-line" aria-hidden="true"></div>
+              <img id="top-logo" src="examples/assets/Mer enn mat_Logo_Gul.svg" alt="Logo">
+              <div class="mid-line" aria-hidden="true"></div>
             </div>
           </div>
         </div>
@@ -173,7 +196,7 @@
         <div class="bottom-bg">
           <div class="container">
             <div class="bottom-content">
-              <img id="bottom-logo" src="examples/assets/NB_logo_venstre_hvit_rgb.svg" alt="Bondelaget logo">
+              <img id="bottom-logo" src="examples/assets/NB_Logo_Minimal_Hvit.svg" alt="Bondelaget logo">
             </div>
           </div>
         </div>
@@ -194,53 +217,47 @@
       window.open(target, "_blank");
     };
 
-    function scaleToFit() {
-      const wrapper = document.getElementById('scale-wrapper');
-      const yellow = document.getElementById('yellow-fill');
-      const topBg = document.querySelector('.top-bg');
-      const bottomBg = document.querySelector('.bottom-bg');
+    function fitHeadingToSingleLine() {
+      const heading = document.getElementById("top-heading");
 
-      wrapper.style.transform = 'scale(1)';
-      wrapper.style.marginTop = '0';
-      yellow.style.width = '100%';
-      topBg.style.width = '100%';
-      bottomBg.style.width = '100%';
-
-      const contentHeight = wrapper.offsetHeight;
-      const scaleHeight = Math.min(1, window.innerHeight / contentHeight);
-      let finalScale = scaleHeight;
-
-      if (window.innerWidth <= 562 && window.innerHeight > window.innerWidth) {
-        finalScale = scaleHeight * 0.65;
+      if (!heading) {
+        return;
       }
 
-      wrapper.style.transform = `scale(${finalScale})`;
-      yellow.style.width = `${100 / finalScale}vw`;
-      topBg.style.width = `${100 / finalScale}vw`;
-      bottomBg.style.width = `${100 / finalScale}vw`;
+      const parent = heading.parentElement;
 
-      const scaledHeight = wrapper.offsetHeight * finalScale;
-      const verticalMargin = (window.innerHeight - scaledHeight) / 2;
-      wrapper.style.marginTop = verticalMargin > 0 ? `${verticalMargin}px` : '0';
+      if (!parent) {
+        return;
+      }
+
+      const maxFontSize = heading.dataset.maxFontSize
+        ? parseFloat(heading.dataset.maxFontSize)
+        : parseFloat(window.getComputedStyle(heading).fontSize);
+      const minFontSize = 10;
+      const availableWidth = parent.clientWidth;
+
+      if (!heading.dataset.maxFontSize) {
+        heading.dataset.maxFontSize = maxFontSize;
+      }
+
+      heading.style.fontSize = `${maxFontSize}px`;
+      heading.style.display = "block";
+
+      let nextFontSize = maxFontSize;
+
+      while (heading.scrollWidth > availableWidth && nextFontSize > minFontSize) {
+        nextFontSize -= 1;
+        heading.style.fontSize = `${nextFontSize}px`;
+      }
     }
 
-    window.addEventListener('load', scaleToFit);
-    window.addEventListener('resize', scaleToFit);
+    window.addEventListener("load", fitHeadingToSingleLine);
+    window.addEventListener("resize", fitHeadingToSingleLine);
 
-    const words = ["KULTUR", "FRAMTIDA", "BEREDSKAP", "INNOVASJON"];
-    let currentIndex = 0;
-    const rotatingSpan = document.getElementById("changingWord");
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitHeadingToSingleLine);
+    }
 
-    rotatingSpan.textContent = words[currentIndex];
-
-    setInterval(() => {
-      rotatingSpan.classList.add("hide");
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % words.length;
-        rotatingSpan.textContent = words[currentIndex];
-        rotatingSpan.classList.remove("hide");
-      }, 500);
-    }, 3000);
   </script>
 </body>
 </html>
