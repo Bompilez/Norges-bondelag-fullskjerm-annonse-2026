@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amedia Parallax</title>
+  <link rel="preconnect" href="https://use.typekit.net">
+  <link rel="stylesheet" href="https://use.typekit.net/xka5zpt.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-image: url(examples/assets/1920x1080_TEST-4.webp);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #f9dc0a;
+      font-family: "open-sans", sans-serif;
+      font-weight: 800;
+      box-sizing: border-box;
+    }
+
+    #banner {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #clickLayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      display: block;
+      text-indent: -9999px;
+      cursor: pointer;
+    }
+
+    #scale-wrapper {
+      transform-origin: top left;
+      width: 100%;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .wrapper-fullwidth {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-top: 30px;
+    }
+
+    .yellow-bg,
+    .top-bg,
+    .bottom-bg {
+      padding: 20px 0;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .yellow-bg { background-color: #f9dc0a; }
+    .top-bg, .bottom-bg { background-color: transparent; }
+
+    .top-content, .bottom-content {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #top-logo {
+      width: 242px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .mid-content {
+      width: 100%;
+      text-align: left;
+    }
+
+    #text1, #text2 {
+      font-size: 95px;
+      font-weight: bold;
+      margin: 0;
+      line-height: 1;
+      letter-spacing: 1px;
+      color: #594a25;
+      will-change: transform;
+    }
+
+    #text2 {
+      padding-bottom: 20px;
+    }
+
+    #changingWord {
+      font-family: "open-sans-condensed", sans-serif;
+      font-weight: 300;
+    }
+
+    .rotating-word {
+      transition: opacity 0.5s ease;
+      display: inline-block;
+    }
+
+    .rotating-word.hide { opacity: 0; }
+
+    .bottom-text {
+      margin: 0;
+      font-size: 26.9px;
+      letter-spacing: 2px;
+      color: #594a25;
+    }
+
+    .bottom-content img {
+      width: 200px;
+      margin-right: 22px;
+      height: auto;
+      display: block;
+      padding-bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div id="banner">
+    <!-- Klikkbart sporingslag via script -->
+    <div
+      id="clickLayer"
+      role="button"
+      aria-label="Klikk for å besøke kampanjen"
+    >
+      Klikk
+    </div>
+
+    <div id="scale-wrapper">
+      <div class="wrapper-fullwidth">
+        <div class="top-bg">
+          <div class="container">
+            <div class="top-content">
+              <img id="top-logo" src="examples/assets/Mer enn mat_Logo_Gul.svg" alt="Logo">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrapper-fullwidth">
+        <div class="yellow-bg" id="yellow-fill">
+          <div class="container">
+            <div class="mid-content">
+              <div id="text1">LANDBRUK</div>
+              <div id="text2">ER <span id="changingWord" class="rotating-word">KULTUR</span></div>
+              <span class="bottom-text">TAKK FOR AT DU STØTTER BONDEN!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrapper-fullwidth">
+        <div class="bottom-bg">
+          <div class="container">
+            <div class="bottom-content">
+              <img id="bottom-logo" src="examples/assets/NB_logo_venstre_hvit_rgb.svg" alt="Bondelaget logo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <script>
+    function getClickURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("click")
+        ? params.get("click") + "https://www.bondelaget.no/merennmat/"
+        : "https://www.bondelaget.no/merennmat/";
+    }
+
+    document.getElementById("clickLayer").onclick = function () {
+      const target = getClickURL();
+      window.open(target, "_blank");
+    };
+
+    function scaleToFit() {
+      const wrapper = document.getElementById('scale-wrapper');
+      const yellow = document.getElementById('yellow-fill');
+      const topBg = document.querySelector('.top-bg');
+      const bottomBg = document.querySelector('.bottom-bg');
+
+      wrapper.style.transform = 'scale(1)';
+      wrapper.style.marginTop = '0';
+      yellow.style.width = '100%';
+      topBg.style.width = '100%';
+      bottomBg.style.width = '100%';
+
+      const contentHeight = wrapper.offsetHeight;
+      const scaleHeight = Math.min(1, window.innerHeight / contentHeight);
+      let finalScale = scaleHeight;
+
+      if (window.innerWidth <= 562 && window.innerHeight > window.innerWidth) {
+        finalScale = scaleHeight * 0.65;
+      }
+
+      wrapper.style.transform = `scale(${finalScale})`;
+      yellow.style.width = `${100 / finalScale}vw`;
+      topBg.style.width = `${100 / finalScale}vw`;
+      bottomBg.style.width = `${100 / finalScale}vw`;
+
+      const scaledHeight = wrapper.offsetHeight * finalScale;
+      const verticalMargin = (window.innerHeight - scaledHeight) / 2;
+      wrapper.style.marginTop = verticalMargin > 0 ? `${verticalMargin}px` : '0';
+    }
+
+    window.addEventListener('load', scaleToFit);
+    window.addEventListener('resize', scaleToFit);
+
+    const words = ["KULTUR", "FRAMTIDA", "BEREDSKAP", "INNOVASJON"];
+    let currentIndex = 0;
+    const rotatingSpan = document.getElementById("changingWord");
+
+    rotatingSpan.textContent = words[currentIndex];
+
+    setInterval(() => {
+      rotatingSpan.classList.add("hide");
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % words.length;
+        rotatingSpan.textContent = words[currentIndex];
+        rotatingSpan.classList.remove("hide");
+      }, 500);
+    }, 3000);
+  </script>
+</body>
+</html>
