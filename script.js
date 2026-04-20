@@ -5,7 +5,7 @@
   var clickURL = params.get('clickUrlParam') || '';
 
   var i = d.createElement('iframe');
-  i.src = 'https://bompilez.github.io/Norges-bondelag/custom.html?click=' + clickURL;
+  i.src = 'https://bompilez.github.io/Norges-bondelag/index.html?click=' + clickURL;
   i.style.border = 'none';
   i.style.width = '100vw';
   i.style.height = '100vh';
