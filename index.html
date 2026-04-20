@@ -208,7 +208,7 @@
     function getClickURL() {
       const params = new URLSearchParams(window.location.search);
       return params.get("click")
-        ? params.get("click") + "https://www.bondelaget.no/merennmat/"
+        ? decodeURIComponent(params.get("click")) + "https://www.bondelaget.no/merennmat/"
         : "https://www.bondelaget.no/merennmat/";
     }
 
